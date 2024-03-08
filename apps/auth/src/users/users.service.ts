@@ -9,7 +9,6 @@ export class UsersService {
   constructor(private readonly userRepository: UsersRepository) {}
 
   async create(createUserDto: CreateUserDto) {
-
     await this.validateCreateUserDto(createUserDto);
 
     return this.userRepository.create({
@@ -20,11 +19,11 @@ export class UsersService {
 
   private async validateCreateUserDto(createUserDto: CreateUserDto) {
     try {
-      await this.userRepository.findOne({email: createUserDto.email})
-    } catch (err){
+      await this.userRepository.findOne({ email: createUserDto.email });
+    } catch (err) {
       return;
     }
-     throw new UnauthorizedException('Email already exists.')
+    throw new UnauthorizedException('Email already exists.');
   }
 
   async verifyUser(email: string, password: string) {
@@ -39,6 +38,4 @@ export class UsersService {
   async getUser(getUserDto: GetUserDto) {
     return this.userRepository.findOne(getUserDto);
   }
-
-
 }
